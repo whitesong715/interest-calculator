@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 적금 계산기
 
-## Getting Started
+Next.js 15, React, TypeScript를 사용하여 개발한 단리 적금 계산기입니다.
 
-First, run the development server:
+## 주요 기능
+
+### 입력 기능
+
+- **적금 기간 및 납부 주기**: 숫자 입력 필드와 단위 선택 드롭다운 (일, 주, 개월, 년)
+- **납부액**: 월 단위 납부액 입력
+- **연 이자율**: 소수점 지원 (step="0.1")
+
+### 계산 기능
+
+- **단리 이자 계산**: 월 기준 단리 이자 계산
+- **이자소득세 계산**: 15.4% 세율 적용
+- **세후 이자 및 최종 수령액 계산**
+
+### 출력 기능
+
+- **결과 표시**: 총 납입 원금, 총 이자, 이자소득세, 세후 이자, 최종 수령액
+- **천 단위 구분**: 한국어 로케일 적용
+- **에러 메시지**: 잘못된 입력 시 안내 메시지
+
+## 기술 스택
+
+- **Next.js 15**: App Router 기반 최신 아키텍처
+- **React 19**: 최신 React 기능 활용
+- **TypeScript**: 타입 안전성 보장
+- **Tailwind CSS**: 반응형 디자인 및 스타일링
+
+## 계산 방식
+
+### 기간 변환
+
+- 년 → 월: 입력값 × 12
+- 주 → 월: 입력값 ÷ 4.345 (1개월 ≈ 4.345주)
+- 일 → 월: 입력값 ÷ 30.417 (1개월 ≈ 30.417일)
+
+### 이자 계산
+
+- **단리 계산**: 총 원금 × (이자율 ÷ 100 ÷ 12) × 기간(월)
+- **이자소득세**: 총 이자 × 0.154 (15.4%)
+- **세후 이자**: 총 이자 - 이자소득세
+- **최종 수령액**: 총 납입 원금 + 세후 이자
+
+## 시작하기
 
 ```bash
+# 의존성 설치
+npm install
+
+# 개발 서버 실행
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# 빌드
+npm run build
+
+# 프로덕션 서버 실행
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 프로젝트 구조
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+interest-calculator/
+├── app/
+│   ├── layout.tsx      # 루트 레이아웃
+│   ├── page.tsx        # 메인 페이지
+│   └── globals.css     # 전역 스타일
+├── components/
+│   └── InterestCalculator.tsx  # 적금 계산기 컴포넌트
+├── public/             # 정적 파일
+└── package.json        # 프로젝트 설정
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 특징
 
-## Learn More
+- **실시간 계산**: 입력값 변경 시 즉시 결과 업데이트
+- **반응형 디자인**: 모바일 및 데스크톱 호환
+- **타입 안전성**: TypeScript로 컴파일 타임 오류 방지
+- **사용자 친화적 UI**: 직관적인 입력 폼과 명확한 결과 표시
+- **에러 처리**: 잘못된 입력에 대한 적절한 피드백
 
-To learn more about Next.js, take a look at the following resources:
+## 라이센스
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT License
